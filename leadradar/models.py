@@ -11,3 +11,6 @@ class Lead:
     score: int
     signals: list[str] = field(default_factory=list)
     outreach_angle: str = ""
+    status: str = "new"
+    notes: str = ""
+    contacted_at: str = ""

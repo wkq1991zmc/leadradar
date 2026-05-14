@@ -8,6 +8,7 @@ from .models import Lead
 
 
 FIELDNAMES = [
+    "status",
     "source",
     "name",
     "url",
@@ -16,6 +17,8 @@ FIELDNAMES = [
     "score",
     "signals",
     "outreach_angle",
+    "notes",
+    "contacted_at",
 ]
 
 
@@ -31,7 +34,7 @@ def write_leads(leads: list[Lead], output: str, output_format: str) -> None:
 
 
 def write_csv(leads: list[Lead], path: Path) -> None:
-    with path.open("w", newline="", encoding="utf-8") as handle:
+    with path.open("w", newline="", encoding="utf-8-sig") as handle:
         writer = csv.DictWriter(handle, fieldnames=FIELDNAMES)
         writer.writeheader()
         for lead in leads:
@@ -45,6 +48,7 @@ def write_json(leads: list[Lead], path: Path) -> None:
 
 def serialize_lead(lead: Lead) -> dict[str, object]:
     return {
+        "status": lead.status,
         "source": lead.source,
         "name": lead.name,
         "url": lead.url,
@@ -53,4 +57,6 @@ def serialize_lead(lead: Lead) -> dict[str, object]:
         "score": lead.score,
         "signals": "; ".join(lead.signals),
         "outreach_angle": lead.outreach_angle,
+        "notes": lead.notes,
+        "contacted_at": lead.contacted_at,
     }
